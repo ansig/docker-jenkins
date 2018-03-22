@@ -1,0 +1,39 @@
+version: '2'
+
+services:
+    jenkins-master:
+        build: jenkins-master
+        volumes:
+            - jenkins-home:/var/jenkins_home
+            - jenkins-log:/var/log/jenkins
+            - /var/run/docker.sock:/var/run/docker.sock
+        ports:
+            - "8080:8080"
+    jenkins-agent01:
+        build: jenkins-agent
+        depends_on:
+            - jenkins-master
+        environment:
+          - JENKINS_URL=http://jenkins-master:8080
+          - JENKINS_AGENT_NAME=agent01
+          - JENKINS_SECRET=924dcbf5dea6669ed47ddd2f5f30527dc83194f29e82ab46e8c97dbc07305dd3
+    jenkins-agent02:
+        build: jenkins-agent
+        depends_on:
+            - jenkins-master
+        environment:
+          - JENKINS_URL=http://jenkins-master:8080
+          - JENKINS_AGENT_NAME=agent02
+          - JENKINS_SECRET=19e574fbac0b02a09cbeafd8898ecd1177da81efb65eebed9f8d7389fd01aed0
+    jenkins-agent03:
+        build: jenkins-agent
+        depends_on:
+            - jenkins-master
+        environment:
+          - JENKINS_URL=http://jenkins-master:8080
+          - JENKINS_AGENT_NAME=agent03
+          - JENKINS_SECRET=1dd7e016abbfcd8a06cd57b67074be44c5476a0013432addaadf7ebcf9172c36
+
+volumes:
+  jenkins-home:
+  jenkins-log:
