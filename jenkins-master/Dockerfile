@@ -1,4 +1,4 @@
-FROM jenkinsci/jenkins:2.107.1
+FROM jenkins/jenkins:lts
 
 #
 # ROOT
@@ -42,7 +42,7 @@ RUN apt-get update \
       && apt-get install -y docker-ce
 
 # Install Docker compose
-RUN curl -L https://github.com/docker/compose/releases/download/1.13.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose \
+RUN curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose \
       && chmod +x /usr/local/bin/docker-compose
 
 #
@@ -50,10 +50,6 @@ RUN curl -L https://github.com/docker/compose/releases/download/1.13.0/docker-co
 #
 
 USER jenkins
-
-# Install default config
-COPY config/default-config.tar.gz /tmp/jenkins-config.tar.gz
-RUN tar -xzvf /tmp/jenkins-config.tar.gz -C /usr/share/jenkins/ref
 
 # Install plugins
 COPY plugins.txt /usr/share/jenkins/ref/plugins.txt

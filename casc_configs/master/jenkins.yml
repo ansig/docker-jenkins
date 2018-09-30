@@ -1,0 +1,50 @@
+jenkins:
+  systemMessage: "Jenkins configured automatically by Jenkins Configuration as Code Plugin\n\n"
+  numExecutors: 5
+  scmCheckoutRetryCount: 2
+  quietPeriod: 5
+  mode: NORMAL
+  agentProtocols:
+    - "JNLP4-connect"
+  slaveAgentPort: 50000
+  securityRealm:
+    local:
+      allowsSignup: false
+      enableCaptcha: false
+      users:
+      - id: "jenkins"
+        password: "jenkins"
+
+tool:
+  git:
+    installations:
+      - name: git
+        home: /usr/bin/git
+  groovyinstallation:
+    installations:
+    - name: "Groovy 2.5.2"
+      properties:
+      - installSource:
+          installers:
+          - groovyInstaller:
+              id: "2.5.2"
+
+security:
+  remotingCLI:
+    enabled: false
+
+plugins:
+  sites:
+  - id: "default"
+    url: "https://updates.jenkins.io/update-center.json"
+
+unclassified:
+  location:
+    adminAddress: you@example.com
+    url: https://ci.example.com/
+  mailer:
+    adminAddress: admin@acme.org
+    replyToAddress: do-not-reply@acme.org
+    # Note that this does not work right now
+    #smtpHost: smtp.acme.org
+    smtpPort: 4441
